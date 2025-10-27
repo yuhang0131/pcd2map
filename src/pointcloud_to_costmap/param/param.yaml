@@ -1,0 +1,38 @@
+pointcloud_to_costmap_node:
+  ros__parameters:
+    # 输入文件配置
+    input_pcd: "/home/yuhang/map.pcd"  # 输入点云文件路径
+    
+    # 输出配置
+    output_prefix: "map"
+    output_directory: "/home/yuhang/"  # 输出目录
+    
+    # 地图生成参数
+    resolution: 0.05                    # 地图分辨率 (m/pixel)
+    padding: 10                         # 地图边界填充 (pixels)
+    
+    # 高度过滤参数
+    min_height: -10.0                   # 最小高度 (m)
+    max_height: 10.0                     # 最大高度 (m)
+    
+    # 法向量估计参数
+    normal_radius: 0.3                  # 法向量估计半径 (m)
+    wall_normal_threshold: 0.3          # 墙体法向量阈值
+    
+    # 统计滤波参数
+    statistical_k: 20                   # 统计滤波K值
+    statistical_stddev: 1.0             # 统计滤波标准差倍数
+    
+    # 半径滤波参数
+    radius_outlier_radius: 0.2          # 半径滤波半径 (m)
+    radius_outlier_min_neighbors: 10    # 最小邻居数
+    
+    # 处理选项
+    enable_height_filter: true          # 启用高度过滤
+    enable_statistical_filter: true     # 启用统计滤波
+    enable_radius_filter: true          # 启用半径滤波
+    enable_normal_filter: true          # 启用法向量滤波
+    
+    # 调试选项
+    save_intermediate_clouds: false     # 保存中间处理结果
+    verbose_logging: true               # 详细日志输出
