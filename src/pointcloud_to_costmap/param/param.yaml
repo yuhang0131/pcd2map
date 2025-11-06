@@ -1,11 +1,11 @@
 pointcloud_to_costmap_node:
   ros__parameters:
     # 输入文件配置
-    input_pcd: "/home/yuhang/map.pcd"  # 输入点云文件路径
+    input_pcd: ""  # 输入点云文件路径
     
     # 输出配置
     output_prefix: "map"
-    output_directory: "/home/yuhang/"  # 输出目录
+    output_directory: ""  # 输出目录
     
     # 地图生成参数
     resolution: 0.05                    # 地图分辨率 (m/pixel)

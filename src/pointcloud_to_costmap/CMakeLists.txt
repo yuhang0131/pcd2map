@@ -8,7 +8,6 @@ find_package(PCL REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(crp_sdk_interfaces REQUIRED)
 
 include_directories(
   include
@@ -23,7 +22,6 @@ ament_target_dependencies(pointcloud_to_costmap_node
   sensor_msgs
   pcl_conversions
   std_msgs
-  crp_sdk_interfaces
 )
 
 target_link_libraries(pointcloud_to_costmap_node

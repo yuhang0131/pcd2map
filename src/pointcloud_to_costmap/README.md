@@ -13,6 +13,7 @@ This package provides a robust solution for generating navigation-ready costmaps
 - **Configurable Parameters**: Comprehensive parameter system for fine-tuning filtering behavior
 - **Multiple Output Formats**: Generates both PGM image files and YAML configuration files for ROS navigation
 - **Debug Support**: Optional intermediate result saving and verbose logging
+- **Automatic Conversion**: Node starts and immediately converts based on parameters (no service call needed)
 
 ## Installation
 
@@ -44,10 +45,18 @@ source install/setup.bash
 ### Quick Start
 
 1. **Configure parameters**: Edit `param/param.yaml` to set your input PCD file path and filtering parameters
+   
+   **重要**: 必须设置以下必填参数：
+   - `input_pcd`: 输入点云文件的完整路径
+   - `output_directory`: 输出文件保存目录
+   - `output_prefix`: 输出文件名前缀
+
 2. **Launch the converter**: 
    ```bash
    ros2 launch pointcloud_to_costmap pointcloud_to_costmap.launch.py
    ```
+   
+   节点启动后将自动读取参数并立即开始转换，转换完成后节点会自动退出。
 
 ### Parameter Configuration
 
@@ -56,12 +65,22 @@ Edit the `param/param.yaml` file to configure the converter for your specific us
 ```yaml
 pointcloud_to_costmap_node:
   ros__parameters:
-    # Input/Output Configuration
-    input_pcd: "/path/to/your/pointcloud.pcd"
-    output_prefix: "your_map_name"
-    output_directory: "/path/to/output/"
+    # 输入文件配置（必填）
+    input_pcd: "/home/yuhang/Code/lightning-lm/data/new_map/global.pcd"  # 输入点云文件路径
     
-    # Filtering parameters...
+    # 输出配置（必填）
+    output_prefix: "map"            # 输出文件名前缀
+    output_directory: "/home/yuhang/"  # 输出目录
+    
+    # 地图生成参数
+    resolution: 0.05                # 地图分辨率 (m/pixel)
+    padding: 10                     # 地图边界填充 (pixels)
+    
+    # 高度过滤参数
+    min_height: -10.0               # 最小高度 (m)
+    max_height: 10.0                # 最大高度 (m)
+    
+    # 其他过滤参数...
 ```
 
 ### Command Line Usage
@@ -76,13 +95,13 @@ ros2 launch pointcloud_to_costmap pointcloud_to_costmap.launch.py param_file:=/p
 
 ## Parameters
 
-### Input/Output Configuration
+### Input/Output Configuration (必填参数)
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `input_pcd` | string | "map.pcd" | Path to input PCD file |
-| `output_prefix` | string | "map" | Prefix for output files |
-| `output_directory` | string | "/tmp/costmap_output" | Directory for saving output files |
+| `input_pcd` | string | "" | 输入PCD文件的完整路径（必填） |
+| `output_prefix` | string | "map" | 输出文件名前缀 |
+| `output_directory` | string | "/tmp" | 输出文件保存目录 |
 
 ### Map Generation Parameters
 
